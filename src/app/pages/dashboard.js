@@ -72,7 +72,7 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <h1 className="text-center text-3xl font-bold py-6 text-gray-900">Apollo Group of Hospitals Dashboard</h1>
+            <h1 className="text-center text-3xl font-bold py-6 text-gray-900">MIT Group of Hospitals Dashboard</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                 <Widget>
                     {monthlyTrends.isLoading ? (
