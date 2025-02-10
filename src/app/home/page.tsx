@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { FaChartLine, FaHospital, FaUserMd, FaRobot, FaUserCircle } from 'react-icons/fa';
+import { FaChartLine, FaHospital, FaUserMd, FaRobot } from 'react-icons/fa';
+import UserMenu from '@/components/UserMenu';
 
 export default function HomePage() {
     return (
@@ -13,13 +14,7 @@ export default function HomePage() {
                             <FaHospital className="h-8 w-8 text-blue-600" />
                             <span className="ml-2 text-xl font-bold text-gray-900">MedDash</span>
                         </div>
-                        <Link
-                            href="/login"
-                            className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-                        >
-                            <FaUserCircle className="h-5 w-5" />
-                            <span>Login</span>
-                        </Link>
+                        <UserMenu />
                     </div>
                 </div>
             </nav>
