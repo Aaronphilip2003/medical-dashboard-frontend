@@ -43,10 +43,6 @@ export default function AIAssistantPage() {
         }
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        // ... code ...
-    };
-
     const renderAnswer = (answer: unknown) => {
         if (!answer) return <div className="text-gray-900">No data available</div>;
 
