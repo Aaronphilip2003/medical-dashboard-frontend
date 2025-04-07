@@ -11,6 +11,11 @@ interface ApiResponse {
     error?: string;
 }
 
+type Message = {
+    role: 'user' | 'assistant';
+    content: string;
+};
+
 export default function AIAssistantPage() {
     const [query, setQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +34,8 @@ export default function AIAssistantPage() {
             });
             const data = await res.json();
             setResponse(data);
-        } catch (error) {
+        } catch (error: unknown) {
+            console.error('Error:', error);
             setResponse({
                 success: false,
                 error: 'Failed to connect to the server'

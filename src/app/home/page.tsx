@@ -62,7 +62,7 @@ export default function HomePage() {
                             Medical Dashboard
                         </span>
                         <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                        with LSTM Predictions
+                            with LSTM Predictions
                         </span>
                     </h1>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
