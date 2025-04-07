@@ -7,19 +7,12 @@ import AuthCheck from '@/components/AuthCheck';
 interface ApiResponse {
     success: boolean;
     query?: string;
-    answer?: any;
+    answer?: unknown;
     error?: string;
 }
 
-interface Message {
-    role: 'user' | 'assistant';
-    content: string;
-}
-
-interface ChatResponse {
-    content: string;
-    role: string;
-}
+type TableValue = string | number | boolean | null;
+type TableRow = Record<string, TableValue>;
 
 export default function AIAssistantPage() {
     const [query, setQuery] = useState('');
@@ -39,7 +32,7 @@ export default function AIAssistantPage() {
             });
             const data = await res.json();
             setResponse(data);
-        } catch (error: unknown) {
+        } catch (error) {
             console.error('Error:', error);
             setResponse({
                 success: false,
@@ -54,14 +47,14 @@ export default function AIAssistantPage() {
         // ... code ...
     };
 
-    const renderAnswer = (answer: any) => {
+    const renderAnswer = (answer: unknown) => {
         if (!answer) return <div className="text-gray-900">No data available</div>;
 
         // Handle single value
         if (!Array.isArray(answer)) {
             return (
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <div className="text-gray-900 text-lg">{answer}</div>
+                    <div className="text-gray-900 text-lg">{String(answer)}</div>
                 </div>
             );
         }
@@ -77,7 +70,7 @@ export default function AIAssistantPage() {
                 <div className="space-y-2">
                     {answer.map((value, idx) => (
                         <div key={idx} className="text-gray-900 p-2 bg-gray-50 rounded">
-                            {value}
+                            {String(value)}
                         </div>
                     ))}
                 </div>
@@ -85,12 +78,13 @@ export default function AIAssistantPage() {
         }
 
         // Handle array of objects (table view)
+        const tableData = answer as TableRow[];
         return (
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
-                            {Object.keys(answer[0]).map((key) => (
+                            {Object.keys(tableData[0]).map((key) => (
                                 <th key={key} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {key}
                                 </th>
@@ -98,11 +92,11 @@ export default function AIAssistantPage() {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {answer.map((row, idx) => (
+                        {tableData.map((row, idx) => (
                             <tr key={idx}>
-                                {Object.values(row).map((value: any, i) => (
+                                {Object.values(row).map((value, i) => (
                                     <td key={i} className="px-6 py-4 whitespace-nowrap text-gray-900">
-                                        {value?.toString()}
+                                        {String(value)}
                                     </td>
                                 ))}
                             </tr>
@@ -199,7 +193,7 @@ export default function AIAssistantPage() {
                                     </>
                                 ) : (
                                     <div className="bg-red-50 text-red-800 p-4 rounded-lg">
-                                        I'm sorry, I couldn't understand your query. Please try rephrasing your question.
+                                        I&apos;m sorry, I couldn&apos;t understand your query. Please try rephrasing your question.
                                     </div>
                                 )}
                             </div>
