@@ -177,7 +177,7 @@ export default function HomePage() {
                                 <div className="space-y-4 text-gray-600">
                                     <p>
                                         Our predictions are powered by a sophisticated Long Short-Term Memory (LSTM) neural network,
-                                        specifically designed for time series forecasting. Here's how our model works:
+                                        specifically designed for time series forecasting. Here&apos;s how our model works:
                                     </p>
 
                                     <div className="grid md:grid-cols-2 gap-6 mt-4">

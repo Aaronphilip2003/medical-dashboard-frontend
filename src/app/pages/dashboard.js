@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, AreaChart, Area } from 'recharts';
 import { BarChart, Bar } from 'recharts';
-import { FaChartLine, FaHospital, FaArrowLeft } from 'react-icons/fa';
+import { FaHospital, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
 
 const fetchData = async (endpoint) => {

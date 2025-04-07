@@ -11,10 +11,15 @@ interface ApiResponse {
     error?: string;
 }
 
-type Message = {
+interface Message {
     role: 'user' | 'assistant';
     content: string;
-};
+}
+
+interface ChatResponse {
+    content: string;
+    role: string;
+}
 
 export default function AIAssistantPage() {
     const [query, setQuery] = useState('');
@@ -43,6 +48,10 @@ export default function AIAssistantPage() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        // ... code ...
     };
 
     const renderAnswer = (answer: any) => {
