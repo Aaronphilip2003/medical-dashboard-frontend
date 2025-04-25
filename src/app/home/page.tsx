@@ -25,7 +25,7 @@ export default function HomePage() {
         try {
             setLoading(true);
             const response = await fetch(
-                `https://medical-backend-664549437927.us-central1.run.app/predictions/disease/${selectedCity}/${selectedDisease}?days=30`,
+                `http://localhost:8000/predictions/disease/${selectedCity}/${selectedDisease}?days=30`,
                 {
                     method: 'GET',
                     headers: {
