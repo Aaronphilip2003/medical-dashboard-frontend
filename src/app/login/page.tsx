@@ -17,7 +17,7 @@ export default function LoginPage() {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8000/auth/login', {
+            const response = await fetch('https://medical-backend-664549437927.us-central1.run.app/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
