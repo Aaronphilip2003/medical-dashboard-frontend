@@ -8,8 +8,13 @@ import { FaHospital, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
 
 const fetchData = async (endpoint) => {
-    console.log('Fetching:', `http://localhost:8000${endpoint}`);
-    const response = await fetch(`http://localhost:8000${endpoint}`);
+    console.log('Fetching:', `https://medical-backend-664549437927.us-central1.run.app${endpoint}`);
+    const response = await fetch(`https://medical-backend-664549437927.us-central1.run.app${endpoint}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    });
     if (!response.ok) {
         console.error('Error response:', await response.text());
         throw new Error('Network response was not ok');

@@ -23,11 +23,12 @@ export default function AIAssistantPage() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await fetch('http://localhost:8000/nlq/query', {
+            const res = await fetch('https://medical-backend-664549437927.us-central1.run.app/nlq/query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({ question: query }),
             });
             const data = await res.json();
