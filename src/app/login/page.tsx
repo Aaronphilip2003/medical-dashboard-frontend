@@ -21,8 +21,10 @@ export default function LoginPage() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
-                credentials: 'include',
+                mode: 'cors',
+                credentials: 'omit',
                 body: JSON.stringify({ username, password }),
             });
 

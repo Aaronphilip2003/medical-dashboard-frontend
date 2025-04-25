@@ -27,10 +27,13 @@ export default function HomePage() {
             const response = await fetch(
                 `https://medical-backend-664549437927.us-central1.run.app/predictions/disease/${selectedCity}/${selectedDisease}?days=30`,
                 {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     },
-                    credentials: 'include',
+                    mode: 'cors',
+                    credentials: 'omit',
                 }
             );
             const data = await response.json();

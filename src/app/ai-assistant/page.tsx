@@ -27,8 +27,10 @@ export default function AIAssistantPage() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
-                credentials: 'include',
+                mode: 'cors',
+                credentials: 'omit',
                 body: JSON.stringify({ question: query }),
             });
             const data = await res.json();

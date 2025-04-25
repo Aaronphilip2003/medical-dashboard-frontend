@@ -10,10 +10,13 @@ import Link from 'next/link';
 const fetchData = async (endpoint) => {
     console.log('Fetching:', `https://medical-backend-664549437927.us-central1.run.app${endpoint}`);
     const response = await fetch(`https://medical-backend-664549437927.us-central1.run.app${endpoint}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
         },
-        credentials: 'include',
+        mode: 'cors',
+        credentials: 'omit',
     });
     if (!response.ok) {
         console.error('Error response:', await response.text());
