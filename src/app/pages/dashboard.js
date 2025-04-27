@@ -31,6 +31,11 @@ const Dashboard = () => {
     const [selectedCity, setSelectedCity] = useState("Mumbai");
     const [selectedMonth, setSelectedMonth] = useState("2020-01");
     const [selectedTrendMonth, setSelectedTrendMonth] = useState("2020-01");
+    const [selectedSeasonalMonth, setSelectedSeasonalMonth] = useState("2020-01");
+    const [selectedCasesCityMonth, setSelectedCasesCityMonth] = useState("2020-01");
+    const [selectedAgeMonth, setSelectedAgeMonth] = useState("2020-01");
+    const [selectedSeverityMonth, setSelectedSeverityMonth] = useState("2020-01");
+    const [selectedSeverityCity, setSelectedSeverityCity] = useState("Mumbai");
 
     const monthlyTrends = useQuery({
         queryKey: ['monthlyDiseaseTrends', selectedTrendMonth],
@@ -38,23 +43,23 @@ const Dashboard = () => {
     });
 
     const seasonalOccurrence = useQuery({
-        queryKey: ['seasonalDiseaseOccurrence'],
-        queryFn: () => fetchData('/heatmap/seasonal-disease-occurrence')
+        queryKey: ['seasonalDiseaseOccurrence', selectedSeasonalMonth],
+        queryFn: () => fetchData(`/heatmap/seasonal-disease-occurrence?month=${selectedSeasonalMonth}`)
     });
 
     const casesByCity = useQuery({
-        queryKey: ['casesByCity'],
-        queryFn: () => fetchData('/distribution/cases-by-city')
+        queryKey: ['casesByCity', selectedCasesCityMonth],
+        queryFn: () => fetchData(`/distribution/cases-by-city?month=${selectedCasesCityMonth}`)
     });
 
     const casesByAge = useQuery({
-        queryKey: ['casesByAge'],
-        queryFn: () => fetchData('/distribution/cases-by-age')
+        queryKey: ['casesByAge', selectedAgeMonth],
+        queryFn: () => fetchData(`/distribution/cases-by-age?month=${selectedAgeMonth}`)
     });
 
     const severityDistribution = useQuery({
-        queryKey: ['severityDistribution'],
-        queryFn: () => fetchData('/distribution/severity-count')
+        queryKey: ['severityDistribution', selectedSeverityMonth, selectedSeverityCity],
+        queryFn: () => fetchData(`/distribution/severity-count?month=${selectedSeverityMonth}&city=${selectedSeverityCity}`)
     });
 
     const resourceUsageTrends = useQuery({
@@ -168,7 +173,20 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <>
-                                <h2 className="text-xl font-bold mb-4 text-gray-900">Seasonal Disease Occurrence</h2>
+                                <div className="flex flex-col space-y-4">
+                                    <h2 className="text-xl font-bold text-gray-900">Seasonal Disease Occurrence</h2>
+                                    <select
+                                        className="p-2 border rounded-md text-gray-900 w-48 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        value={selectedSeasonalMonth}
+                                        onChange={(e) => setSelectedSeasonalMonth(e.target.value)}
+                                    >
+                                        {generateMonthOptions().map(option => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <ResponsiveContainer width="100%" height={300}>
                                     <LineChart data={seasonalOccurrence.data}>
                                         <CartesianGrid strokeDasharray="3 3" />
@@ -195,7 +213,20 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <>
-                                <h2 className="text-xl font-bold mb-4 text-gray-900">Cases by City</h2>
+                                <div className="flex flex-col space-y-4">
+                                    <h2 className="text-xl font-bold text-gray-900">Cases by City</h2>
+                                    <select
+                                        className="p-2 border rounded-md text-gray-900 w-48 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        value={selectedCasesCityMonth}
+                                        onChange={(e) => setSelectedCasesCityMonth(e.target.value)}
+                                    >
+                                        {generateMonthOptions().map(option => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <ResponsiveContainer width="100%" height={300}>
                                     <BarChart data={casesByCity.data}>
                                         <CartesianGrid strokeDasharray="3 3" />
@@ -222,7 +253,20 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <>
-                                <h2 className="text-xl font-bold mb-4 text-gray-900">Cases by Age</h2>
+                                <div className="flex flex-col space-y-4">
+                                    <h2 className="text-xl font-bold text-gray-900">Cases by Age</h2>
+                                    <select
+                                        className="p-2 border rounded-md text-gray-900 w-48 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        value={selectedAgeMonth}
+                                        onChange={(e) => setSelectedAgeMonth(e.target.value)}
+                                    >
+                                        {generateMonthOptions().map(option => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <ResponsiveContainer width="100%" height={300}>
                                     <BarChart data={casesByAge.data}>
                                         <CartesianGrid strokeDasharray="3 3" />
@@ -249,7 +293,32 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <>
-                                <h2 className="text-xl font-bold mb-4 text-gray-900">Severity Distribution</h2>
+                                <div className="flex flex-col space-y-4">
+                                    <h2 className="text-xl font-bold text-gray-900">Severity Distribution</h2>
+                                    <div className="flex flex-col md:flex-row gap-4">
+                                        <select
+                                            className="p-2 border rounded-md text-gray-900"
+                                            value={selectedSeverityCity}
+                                            onChange={(e) => setSelectedSeverityCity(e.target.value)}
+                                        >
+                                            {["Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata",
+                                                "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Lucknow"].map(city => (
+                                                    <option key={city} value={city}>{city}</option>
+                                                ))}
+                                        </select>
+                                        <select
+                                            className="p-2 border rounded-md text-gray-900"
+                                            value={selectedSeverityMonth}
+                                            onChange={(e) => setSelectedSeverityMonth(e.target.value)}
+                                        >
+                                            {generateMonthOptions().map(option => (
+                                                <option key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                                 <ResponsiveContainer width="100%" height={300}>
                                     <PieChart>
                                         <Pie
